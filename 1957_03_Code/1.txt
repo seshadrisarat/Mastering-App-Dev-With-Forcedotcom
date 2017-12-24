@@ -1,0 +1,7 @@
+global Database.QueryLocator start(Database.BatchableContext BC) {
+  return Database.getQueryLocator([SELECT ID, FirstName, LastName, BillingAddress
+                                  FROM Account
+                                  WHERE Active = true AND BillingState = 'Tx'
+                                  ORDER BY Id desc
+  ]);
+}

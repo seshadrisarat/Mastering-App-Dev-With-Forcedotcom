@@ -1,0 +1,17 @@
+public string getRequest(){
+  HttpRequest req = new HttpRequest();
+  //Set HTTPRequest Method
+  req.setMethod('GET');
+  req.setEndpoint('https://www.google.com?q=codefriar.com');
+  //Create the http object
+  Http http = new Http();
+
+  try {
+    //This executes the rest request
+ HTTPResponse res = http.send(req);
+ //Dump result to logs for debugging
+ System.debug(res.toString());
+  } catch(System.CalloutException e) {
+ //If it fails, handle it responsibly
+  }
+}

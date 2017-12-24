@@ -1,0 +1,14 @@
+OkHttpClient client = new OkHttpClient();
+
+MediaType mediaType = MediaType.parse("application/JSON");
+RequestBody body = RequestBody.create(mediaType, "{\r    \"name\": \"Most Awesome Co!\",\r    \"industry\": \"Alchemy: Turning Caffeine into Code\"\r}\r");
+Request request = new Request.Builder()
+.url("https://na15.salesforce.com/services/data/v33.0/sobjects/Account/")
+  .post(body)
+  .addHeader("authorization", "Bearer 00Di0000000ap76!AQUAQDzVKaqKP4muP.AaBVlSd6sC30sYDoHS9_UTZK3_Mtj7TaIjtflXF96J3ybrrvVTqpU3rezCgjVFe56xdzY6m5AKht_d")
+  .addHeader("content-type", "application/JSON")
+  .addHeader("cache-control", "no-cache")
+  .addHeader("postman-token", "e1ae9a9a-c842-42e4-4d10-8f470fb56531")
+  .build();
+
+Response response = client.newCall(request).execute();

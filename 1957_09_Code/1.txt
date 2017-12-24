@@ -1,0 +1,19 @@
+public Double calculateTax(Id goodsSold, Account buyer){
+  if(buyer.tax_exempt__c) {
+    if(buyer.shippingState_taxed == true){
+      if(goodsSold.price__c >= TAX_THRESHHOLD_LIMIT){
+        return .85 * goodsSold.price__c;
+      } else {
+        return 0;
+      }
+    }
+  } else {
+    if(buyer.shippingState_taxed == true){
+      if(goodsSold.price__c >= TAX_THRESHHOLD_LIMIT){
+        return .85 * goodsSold.price__c;
+      } else {
+        return 0;
+      }
+    }
+  }
+}

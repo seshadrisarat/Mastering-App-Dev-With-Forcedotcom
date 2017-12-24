@@ -1,0 +1,8 @@
+grunt.registerTask('automatedDeploy', "Refreshes resources and deploys to selected env", function() {
+		grunt.task.run([
+			'refreshResources',
+			'copy:deploy',
+			'antdeploy:automated',
+			'clean:deployTmp'
+		]);
+	});

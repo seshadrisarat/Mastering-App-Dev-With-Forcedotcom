@@ -1,0 +1,15 @@
+@isTest
+public class customAssertions {
+	public class customAssertionException extends Exception {}
+
+	public static Boolean ContactsAreFromSameHousehold(Contact firstContact, Contact secondContact, String friendlyMessage){
+		System.assertEquals(firstContact.mailingAddress, secondContact.mailingAddress, 'MailingAddress: ' + friendlyMessage);
+		System.assertEquals(firstContact.homePhone, secondContact.homePhone, 'homePhone: ' + friendlyMessage);
+		System.assertEquals(firstContact.lovesCrankCalls, secondContact.lovesCrankCalls, 'lovesCrankCalls: ' + friendlyMessage);
+		if(firstContact.fullName == secondContact.fullName){
+			throw new customAssertionException('Full Names are identical: ' + friendlyMessage)
+		}
+		return true;
+	}
+
+}

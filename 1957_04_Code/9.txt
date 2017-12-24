@@ -1,0 +1,24 @@
+// Your controller
+callApexController: function(cmp, helper) {
+  helper.hCallApexController ();
+}
+
+// Your renderer
+afterRender: function(cmp, helper) {
+   this.superAfterRender();
+   helper.hCallApexController ();
+}
+
+// Your helper
+hCallApexController: function(cmp, helper) {
+var a = component.get("c.getS1Data");
+a.setCallback(this, function(action) {
+if (a.getState() === "SUCCESS") {
+	//handle the data returned
+} else {
+//handle the error
+}
+});
+
+   $A.enqueueAction(a);
+}

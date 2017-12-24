@@ -1,0 +1,5 @@
+var github = new Github({
+		username: process.env.GITHUBUSER,
+		password: process.env.GITHUBPAT,
+		auth: "basic"
+	});

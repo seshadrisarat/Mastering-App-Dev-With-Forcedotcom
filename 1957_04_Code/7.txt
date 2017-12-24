@@ -1,0 +1,5 @@
+({
+	customAction : function(comp, evt, helper) {
+		//Your custom logic here
+	}
+})

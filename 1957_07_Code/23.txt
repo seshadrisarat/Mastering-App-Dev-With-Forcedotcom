@@ -1,0 +1,18 @@
+public void get(String endpoint, String body,
+  Map<String,String> headers){
+	this.endpoint = endpoint;
+	this.body = body;
+	this.headers = headers;
+	this.get();
+}
+
+	public void get(String endpoint, Map<String,String> headers){
+		this.endpoint = endpoint;
+		this.headers = headers;
+		this.get();
+	}
+
+	public void get(String endpoint){
+		this.endpoint = endpoint;
+		this.get();
+	}

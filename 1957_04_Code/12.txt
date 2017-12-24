@@ -1,0 +1,3 @@
+<design:component>
+    <design:attribute name="Customer" label="Customer" description="Customer contact Id you wish to interact with" />
+</design:component>

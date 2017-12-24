@@ -1,0 +1,20 @@
+@future
+global static void SomeMethodWithACallout(id accountId){
+     TestRestClient trc = new TestRestClient();
+     id aId;
+     try {
+          aId = (Id) accountId;
+     } catch (Exception e) {
+          throw new exception(‘You fail.’);
+     }
+     Account a = [select id, name, bar from Account where id = :aId];
+
+     //make your callout
+     RestClientHTTPMocks fakeResponse =
+new RestClientHTTPMocks(200, ‘Success’, ‘Success’,
+new Map<String,String>());
+     System.AssertNotEquals(fakeResponse, null);
+     Test.setMock(HttpCalloutMock.class, fakeResponse);
+     System.AssertNotEquals(trc, null);
+     String result = trc.get(‘http://www.google.com’);
+}

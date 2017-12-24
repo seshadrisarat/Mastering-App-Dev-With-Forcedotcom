@@ -1,0 +1,3 @@
+<Aura:Component>
+	<Aura:Attribute Name=”ClientName” Type=”String” Default=”Marc Benioff”/>
+</Aura:Component>

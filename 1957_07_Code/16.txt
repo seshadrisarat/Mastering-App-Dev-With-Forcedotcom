@@ -1,0 +1,11 @@
+@HttpPatch
+global static OppApiWrapper remapChildren(OppApiWrapper incoming){
+  try {
+    upsert incoming.opp;
+    upsert incoming.oppLineItems;
+    upsert incoming.oppOrders;
+  } catch(DMLException dmle){
+    throw new OppApiException(dmle);
+  }
+  return new OppApiWrapper(incoming.opp.id);
+}

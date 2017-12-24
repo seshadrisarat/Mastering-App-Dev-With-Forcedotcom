@@ -1,0 +1,4 @@
+@RestResource(urlMapping='/OpportunityApi/*')
+global with sharing class OpportunityApi {
+
+}

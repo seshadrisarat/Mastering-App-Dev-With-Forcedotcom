@@ -1,0 +1,14 @@
+private class exampleCode_Tests {
+  @isTest static void test_getBankAccount_Positive() {
+    exampleCode drWho = new exampleCode();
+    User u = UserTestFactory.getUserWithProfile(‘TimeLord);
+    Account a = (Account)TestFactory.createSObject(new Account());
+    Integer result;
+    System.runAs(u){
+      Test.startTest();
+        result = drWho.getBankAccount(a);
+      Test.stopTest();
+    }
+    System.assertNotEquals(result, null,
+			‘Expected The Doctor to have access to bank #’);
+}

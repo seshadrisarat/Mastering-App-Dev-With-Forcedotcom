@@ -1,0 +1,6 @@
+global void execute(Database.BatchableContext BC, List<Account> scope) {
+  for (Account a : scope) {
+    //Complex operations against individual Account records here
+  }
+  update scope;
+}

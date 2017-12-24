@@ -1,0 +1,5 @@
+"dependencies": {
+// … existing dependencies hidden
+"grunt-prompt": "~1.1.0",
+“github-api”: “~0.10.6”
+}

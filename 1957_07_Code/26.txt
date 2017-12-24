@@ -1,0 +1,10 @@
+public accountRestResponses getAccountById(Id id){
+	restClient.get(endpointWithId(id));
+	accountRestResponse parsedObj;
+	try{
+		parsedObj = accoutRestResponses.parse(restClient.responseBody);
+	} catch (JSONException jsone) {
+		throw new RestClient.RestClientException(jsone);
+	}
+	return parsedObj;
+}

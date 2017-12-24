@@ -1,0 +1,5 @@
+customEmitter : function(cmp, event, helper) {
+var myObj = cmp.get("v.myObj");
+var myEvent = $A.get("e.namespace:someEvent");
+myEvent.setParams({ "myObj": myObj}).fire();
+}

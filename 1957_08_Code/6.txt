@@ -1,0 +1,40 @@
+antdeploy: {
+			options: {
+				version: '35.0',
+				root: 'deployTmp/src/',
+				existingPackage: false
+			},
+			automated: {
+				options: {
+					useEnv: true,
+					serverurl: 'https://login.salesforce.com',
+					runAllTests: true
+				},
+				pkg: metadataToDeploy
+			},
+			test: {
+				options: {
+					serverurl: 'https://test.salesforce.com'
+				},
+				pkg: metadataToDeploy
+			},
+			prod: {
+				options: {
+					serverurl: 'https://login.salesforce.com'
+				},
+				pkg: metadataToDeploy
+			},
+			jsApp: {
+				options: {
+					user: '',
+					pass: '',
+					token: '',
+					serverurl: 'https://test.salesforce.com'
+				},
+				pkg: {
+					staticresources: [
+						'jasmine'
+					]
+				}
+			}
+		},

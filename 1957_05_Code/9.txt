@@ -1,0 +1,15 @@
+@isTest
+private class exampleCode_Tests {
+  @isTest static void test_getBankAccount_W_PermSet() {
+    exampleCode ClaraOswald = new exampleCode();
+    User u = UserTestFactory.getUserWithProfileAndPermSets(‘Standard User’, new List<String>{‘companion’});
+    Account a = (Account)TestFactory.createSObject(new Account());
+    Boolean result;
+    System.runAs(u){
+      Test.startTest();
+        result = ClaraOswald.getBankAccount(a);
+      Test.stopTest();
+    }
+    System.assertNotEquals(result, null,
+	‘Expected ClaraOswald who has Companion Permissions to have access to the bank account’);
+}

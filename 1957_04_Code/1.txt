@@ -1,0 +1,6 @@
+Public class myInvocableAction {
+@invocableAction(label=”BestActionEver” description=”Seriously, it’s the best action ever”)
+  public void bestActionEver(List<Account> accountsOfDoom){
+    // do stuff
+  }
+}

@@ -1,0 +1,8 @@
+copy: {
+			deploy: {
+				files: [{
+					src: 'src/**',
+					dest: 'deployTmp/',
+				}]
+			},
+		},

@@ -1,0 +1,11 @@
+@isTest
+static void test_method_one() {
+
+     //If you’re not using SmartFactory, you’re doing it wrong
+     Account account = (Account)
+SmartFactory.createSObject(‘Account’);
+     insert account;
+     Test.startTest();
+     AwesomeClass.SomeMethodWithACallout(account.id);
+     Test.StopTest();
+}

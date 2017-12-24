@@ -1,0 +1,61 @@
+@RestResource(urlMapping='/OpportunityApi/*')
+global with sharing class OpportunityApi {
+
+  global class OppApiException extends Exception {}
+
+  global class OppApiWrapper {
+    global Opportunity opp {get; set;}
+    global List<OpportunityLineItem> oppLineItems {get; set;}
+    global List<Order> OppOrders {get; set;}
+
+    public OppApiWrapper(Id oppId){
+      List<sObject> oppFields = OpportunityApiFieldDefs__c.getAll().values();
+      List<sObject> oppLineItemFields = OpportunityApiFieldDefs__c.getAll().values();
+      List<sObject> oppOrderFields = OpportunityApiFieldDefs__c.getAll().values();
+      this.opp = (Opportunity) OpportunityApi.queryForRecords(OpportunityApi.generateSoqlFromCustomSetting(oppFields, 'Opportunity', oppId))[0];
+      this.oppLineItems = queryForRecords(generateSoqlFromCustomSetting(oppLineItemFields, 'OpportunityLineItem', oppId));
+      this.OppOrders = queryForRecords(generateSoqlFromCustomSetting(oppOrderFields, 'Order', oppId));
+    }
+
+  }
+
+  @HttpGet
+global static OppApiWrapper GetOppOppLineItemsAndOrders() {
+  Id oppId = OpportunityApi.getRequestUriId(RestContext.request);
+  if(oppId.getSObjectType().getDescribe().getName().toLowerCase() != 'opportunity'){
+    throw new OppApiException('Provided ID was not a valid Opportunity ID! passed OppId is: ' + oppId);
+  }
+  return new OppApiWrapper(oppId);
+}
+
+//Helper methods
+ private static Id getRequestUriId(RestRequest req){
+   Id UriId;
+   try{
+     UriId = (ID) req.requestURI.substring(req.requestURI.lastIndexOf('/') + 1);
+   } catch (Exception e){
+     throw new OppApiException('Failed to parse ID in URI');
+   }
+   return UriId;
+ }
+
+ private static string generateSoqlFromCustomSetting(List<sObject> fields, String objectName, Id matchId){
+   String retValue = 'SELECT ';
+   for(sObject f:fields){
+     retValue += String.valueOf(f.get('Name')) + ', ';
+   }
+   retValue = retValue.removeEnd(', ');
+   retValue += 'FROM ' + objectName;
+   if(objectName.toLowerCase() == 'opportunity'){
+     retValue += 'WHERE Id = \'' + matchId + '\'';
+   } else {
+     retValue += 'WHERE OpportunityId = \'' + matchId + '\'';
+   }
+   return retValue;
+ }
+
+ private static List<sObject> queryForRecords(String query){
+   return database.query(query);
+ }
+
+}

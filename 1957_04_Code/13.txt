@@ -1,0 +1,7 @@
+public class LAccountController {
+    @AuraEnabled
+    public static List<Account> getAccountsWithBillingAddress() {
+        return [SELECT Name, Id, BillingAddress FROM Account Order
+By Id Limit 20];
+    }
+}

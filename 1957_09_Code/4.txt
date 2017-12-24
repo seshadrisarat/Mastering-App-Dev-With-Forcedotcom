@@ -1,0 +1,1 @@
+SELECT Order__r.Account__r.Name, Order__r.Id, Order__r.Contact__r.FirstName, Product__r.Id, Product__r.Name, Product__r.ProductFamily__r.Name FROM Order_m2m_Product WHERE Order__r.Account__r.Id = ‘awesomeId’

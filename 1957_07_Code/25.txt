@@ -1,0 +1,26 @@
+public with sharing class accountSObjectRestClient {
+
+	sObjectApiRestClient restClient;
+	private string endpointPath = 'account/';
+
+	public accountSObjectRestClient() {
+		restClient = new sObjectApiRestClient();
+	}
+
+	public string getAccountById(Id id){
+		restClient.get(endpointWithId(id));
+		return restClient.responseBody;
+	}
+
+	public string updateAccountById(Id id, Account account){
+		restClient.endpoint = endpointWithId(id);
+		restClient.body = JSON.serialize(account);
+		restClient.patch();
+		return restClient.responseBody;
+	}
+
+	//Helper methods
+	private string endpointWithId(Id id){
+		return this.endpointPath + id;
+	}
+}

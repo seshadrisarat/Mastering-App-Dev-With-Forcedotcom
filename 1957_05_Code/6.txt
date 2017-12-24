@@ -1,0 +1,13 @@
+Public class exampleCode {
+  Public class exampleCodeException{}
+  Public Integer getBankAccount(Account a){
+	  // SuperSekr3tBankAccountNum__c is an encrypted field
+	  a = [SELECT superSekr3tBankAccountNum__c
+FROM Account
+WHERE ID :a.id];
+If(String.ValueOf(a.superSekr3tBankAccountNum__c).contains(‘*’)) {
+  Throw new exampleCodeException(‘Nope!’);
+}
+     return a.SuperSekr3tBankAccountNum__c;
+  }
+}

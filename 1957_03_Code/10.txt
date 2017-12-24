@@ -1,0 +1,26 @@
+@isTest
+private class AuditLogGenerator_Tests {
+
+  static testmethod void test1() {
+    Account firstAccount = (Account) TestFactory.createSObject(new Account());
+    insert firstAccount;
+    Audit_Log__c log;
+    HTTPMockCalloutFactory fakeResponse = new
+      HTTPMockCalloutFactory(200,
+        'OK',
+        '{"results":"Ok"}',
+        new Map<String, String>());
+    Test.setMock(HttpCalloutMock.class, fakeResponse);
+
+  Id jobId;
+  Test.startTest();
+    jobId = System.EnqueueJob(new auditLogGenerator(firstAccount));
+    log = new Audit_Log__c(JobId__c = jobId, AccountID__c = firstAccount.Id);
+    Test.stopTest();
+
+    Audit_Log__c resultingLog = [SELECT success__c
+                                FROM Audit_Log__c
+                                WHERE jobId = :jobId];
+    System.assert(resultingLog.success__c);
+  }
+}

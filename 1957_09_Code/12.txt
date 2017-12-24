@@ -1,0 +1,9 @@
+Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+   String[] toAddresses = new String[]{'theDoctor@who.com'};
+   mail.setToAddresses(toAddresses);
+   mail.setUseSignature(this.useSig);
+   mail.setSaveAsActivity(this.saveActivity);
+   mail.setSenderDisplayName(this.senderDisplayName);
+   mail.setTargetObjectId(targetObjectId);
+   mail.setTemplateId(templateId);
+   Messaging.sendEmail(new Messaging.SingleEmailMessage[] {mail});

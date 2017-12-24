@@ -1,0 +1,16 @@
+@isTest
+Public Without Sharing Class OpportunityTestFactory {
+
+	Public Static genOppWithLineItemsAndAccount(Integer numLineItems, Boolean doInsert){
+		Account a = (Account)TestFactory.createSObject(New Account(), doInsert);
+		Opportunity o = (Opportunity)TestFactory.createSObject(New Opportunity(accountId=a.id), doInsert);
+		List<OpportunityLineItem> olis = new List<OpportunityLineItem>();
+		for(Integer i = 0; i < numLineItems; i++) {
+			olis.add((OpportunityLineItem)TestFactory.createSObject(new OpportunityLineItem(OpportunityId=o.id)));
+		}
+		if(doInsert){
+			insert olis;
+		}
+		return o;
+	}
+}

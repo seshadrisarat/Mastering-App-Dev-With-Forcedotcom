@@ -1,0 +1,14 @@
+{
+  "totalSize": 1,
+  "done": true,
+  "records": [
+    {
+      "attributes": {
+        "type": "Account",
+        "url": "/services/data/v33.0/sobjects/Account/001i000000FOKzOAAX"
+      },
+      "Name": "GenePoint",
+      "Id": "001i000000FOKzOAAX"
+    }
+  ]
+}

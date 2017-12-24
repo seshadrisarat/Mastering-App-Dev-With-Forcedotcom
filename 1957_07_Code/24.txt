@@ -1,0 +1,32 @@
+public virtual class sObjectApiRestClient extends RestClient {
+
+	private final string APIVersion = 'v35.0';
+	private final string instance = 'na7';
+	private string baseURL = 'https://' +
+instance +
+'salesforce.com/services/data/' +
+APIVersion + '/';
+	private Map<String,String> additionalHeaders = new
+Map<String,String>();
+
+	Public override void executeRequest() {
+		//first set our endpoint by prepending it with our baseURL
+		this.endpoint = this.baseURL + this.endpoint;
+		if(this.request == null){
+			this.buildRequest();
+		}
+		//Having built the request, inject headers for authentication
+		injectAdditionalHeaders();
+		this.response = this.httpObj.send(request);
+		if (response.getStatusCode() > 299) {
+			throw new RestClientException('Response Code was: ' +
+ response.getStatusCode());
+		}
+	}
+
+	private void injectAdditionalHeaders(){
+		for(String h:additionalHeaders.keySet()){
+			this.request.setHeader(h, additionalHeaders.get(h));
+		}
+	}
+}

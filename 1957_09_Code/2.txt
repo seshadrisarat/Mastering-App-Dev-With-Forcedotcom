@@ -1,0 +1,6 @@
+  public Double calculateTax(Id goodsSold, Account buyer){
+    if(buyer.should_be_taxed &&
+goodsSold.price__c >= TAX_THRESHHOLD_LIMIT){
+      return 8.5;
+    }
+  }

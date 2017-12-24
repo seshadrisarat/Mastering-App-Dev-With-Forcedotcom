@@ -1,0 +1,3 @@
+<aura:component>
+	<!-- your component details here -->
+</aura:component>

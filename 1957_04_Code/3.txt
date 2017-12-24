@@ -1,0 +1,26 @@
+public class IM_EasyCalc {
+
+  public class additionInput {
+    @invocableVariable(Required = true Label = 'First Number' Description = 'First number to add')
+    public Integer first;
+    @invocableVariable(Required = true Label = 'Second Number' Description = 'Second number to add')
+    public Integer second;
+  }
+
+  public class additionResult {
+    @invocableVariable
+    public Integer result;
+    public AdditionResult(Integer a, Integer b) {
+      this.result = a + b;
+    }
+  }
+
+  @invocableMethod(Label = 'Add' Description = 'Add Two Numbers')
+  public static List<AdditionResult> addTwoNumbers(List<AdditionInput> requests) {
+    List<AdditionResult> results = new List<AdditionResult>();
+    for (AdditionInput request : requests) {
+      results.add(new AdditionResult(request.first, request.second));
+    }
+    return results;
+  }
+}

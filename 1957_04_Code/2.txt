@@ -1,0 +1,9 @@
+Map<Schema.SObjectType,List<Id>> InputObjectsByType = new Map<Schema.SObjectType,List<Id>>();
+For(Id i:InputIds){
+  Schema.SObjectType t = i.getSObjectType();
+  If(InputObjectsByType.containsKey(t){
+    InputObjectsByType.get(t).add(i);
+  } else {
+    InputObjectsByType.put(t, new List<Id>{i});
+  }
+}

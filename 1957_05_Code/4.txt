@@ -1,0 +1,23 @@
+Public class exampleCode {
+  Public class exampleCodeException{}
+  Public Static Integer division(Integer one, Integer two){
+    if(two == 0) {
+      Throw new exampleCodeException(‘Dividing by zero 	makes 								kittens cry’);
+    }
+    return one / two;
+  }
+}
+
+private class exampleCode_Tests {
+  @isTest static void test_Divide_Negative() {
+    Boolean didCatchProperException = false;
+    Test.startTest();
+    Try {
+      exampleCode.divide(1, 0);
+    } catch (exampleCode.exampleCodeException AwesomeException){
+      didCatchProperException = true;
+    }
+    Test.stopTest();
+    System.assert(didCatchProperException,
+			‘Properly caught custom Exception’);
+}

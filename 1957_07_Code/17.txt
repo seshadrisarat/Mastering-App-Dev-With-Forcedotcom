@@ -1,0 +1,13 @@
+@HttpDelete
+global static Boolean deleteObjectTree(){
+  Boolean result = false;
+  id UriID = OpportunityApi.getRequestUriId(RestContext.request);
+    try{
+        Opportunity toDelete = [SELECT id FROM Opportunity WHERE id = :UriID];
+        delete toDelete;
+        result = true;
+    } catch (DMLException dmle){
+        throw new OppApiException(dmle);
+    }
+  return result;
+}

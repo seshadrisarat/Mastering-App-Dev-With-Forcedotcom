@@ -1,0 +1,16 @@
+Public class exampleCode {
+  Public Integer add(Integer one, Integer two){
+    return one + two;
+  }
+}
+
+@isTest
+private class exampleCode_Tests {
+  @isTest static void test_Add_Postive() {
+    exampleCode drWho = new exampleCode();
+    Test.startTest();
+    Integer testValue = drWho.add(5,7);
+    Test.stopTest();
+     System.assertEquals(12, testValue,
+			‘Expected 5+7 to equal 12’);
+}

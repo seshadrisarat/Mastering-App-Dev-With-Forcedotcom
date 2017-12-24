@@ -1,0 +1,20 @@
+@isTest
+private class exampleCode_Tests {
+  @isTest static void test_getBankAccount_UberForNope() {
+    exampleCode Dalek = new exampleCode();
+    User u = UserTestFactory.getUserWithProfile(‘Dalek’);
+    Account a = (Account)TestFactory.createSObject(new Account());
+    Boolean didCatchException = false;
+	 Integer result;
+    System.runAs(u){
+      Test.startTest();
+		  Try {
+          result = Dalek.getBankAccount(a);
+		  } catch(exampleCode.ExampleCodeException e){
+			 if(e.getMessage().containsIgnoreCase(‘nope’)){
+				didCatchException = true;
+		  }
+      Test.stopTest();
+    }
+    System.assert(didCatchException, ‘Expected Daleks to be blocked’);
+}

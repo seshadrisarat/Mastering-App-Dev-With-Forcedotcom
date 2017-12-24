@@ -1,0 +1,6 @@
+source ~/.profile
+npm install -g --prefix /home/ubuntu/ -q grunt-cli
+npm install -q
+grunt jasmine
+grunt automatedDeploy
+grunt genpullrequest

@@ -1,0 +1,4 @@
+grunt.registerTask('refreshResources',
+"Refresh the staticResource.zip files", function() {
+		grunt.task.run(['compress:jsApp']);
+	});

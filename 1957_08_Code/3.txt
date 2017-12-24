@@ -1,0 +1,33 @@
+grunt.initConfig({
+		jasmine: {
+			js_app: {
+// Include paths for both the local user,
+// if we're in dev mode, as well as share mode
+				src: [
+"resource-bundles/app.resource/resources/tests/**/*.js"],
+				options: {
+					vendor: [
+						'lib/jQuery-2.1.1.min.js',
+						'lib/jquery-jasmine.js',
+					],
+					specs: [
+						'spec/unitTests/jquerySpec.js',
+						'spec/unitTests/exampleSpec.js',
+					],
+					version: '2.0.0',
+					keepRunner: true,
+					template: require('grunt-template-jasmine-istanbul'),
+					templateOptions: {
+						files: '!resource-bundles/jsApp.resource/**',
+						coverage: 'bin/coverage/coverage.json',
+						report: 'bin/coverage',
+						thresholds: {
+							lines: 30,
+							statements: 20,
+							branches: 10,
+							functions: 5
+						}
+					}
+				}
+			}
+		},

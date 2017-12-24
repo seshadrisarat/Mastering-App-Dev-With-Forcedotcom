@@ -1,0 +1,54 @@
+Global Class CustomBatchable implements Database.Batchable<sObject>, Database.Stateful, Database.AllowsCallouts {
+	//failedToUpdate persists throughout the entire job.
+	Private Set<Account> failedToUpdate = new Set<Account>();
+	//Because it’s marked Static, updatedSuccessfully
+	// resets every time the execute method runs
+	Private Static Set<Id> updatedSuccessfully = new Set<Id>();
+	String query;
+
+	global CustomBatchable() {
+		//Optional constructor, useful for setting query
+		//variables like Dates etc. Setting the query in the constructor
+		// allows you to use dynamic SOQL as well
+		this.query = 'SELECT ID, Name, BillingStreet, BillingState
+		FROM Account
+		ORDER BY Id Desc';
+	}
+
+	global Database.QueryLocator start(Database.BatchableContext BC) {
+		return Database.getQueryLocator(query);
+	}
+
+	global void execute(Database.BatchableContext BC, List<Account> scope) {
+		for (Account a : scope) {
+			if (a.BillingState == 'Tx' || a.Name.contains('awesome')) {
+				a.Active__c = 'true';
+			}
+		}
+		Database.SaveResult[] results = Database.Update(scope, false);
+
+		for (Database.SaveResult sr : results) {
+			if (sr.isSuccess()) {
+				updatedSuccessfully.add(sr.getId());
+			}
+		}
+
+		for (Account a : scope) {
+			if (!updatedSuccessfully.contains(a.Id)) {
+				failedToUpdate.add(a);
+			}
+		}
+	}
+
+	global void finish(Database.BatchableContext BC) {
+		if (failedToUpdate.size() > 0) {
+			//Email admin about failed updates
+			//Or process them individually, attempting to
+			//auto-correct DML issues.
+		}
+		//Once done processing the failed records:
+		List<Account> insertNow = new List<Account>();
+		insertNow.addAll(failedToUpdate);
+		insert insertNow;
+	}
+}

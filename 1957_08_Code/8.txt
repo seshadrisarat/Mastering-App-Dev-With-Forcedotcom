@@ -1,0 +1,14 @@
+compress: {
+	jsApp: {
+		options: {
+			mode: 'zip',
+			archive: 'src/staticresources/jsApp.resource'
+		},
+		files: [{
+			expand: true,
+			cwd: 'resource-bundles/jsApp.resource/',
+			src: ['**'],
+			dest: ''
+		}, ]
+	},
+},

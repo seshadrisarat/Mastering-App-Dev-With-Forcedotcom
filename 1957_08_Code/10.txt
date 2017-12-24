@@ -1,0 +1,22 @@
+antretrieve: {
+			options: {
+				version: '29.0',
+				useEnv: true,
+				root: 'rollback/',
+				// existingPackage: true,
+				maxPoll: '20',
+				pollWaitMillis: '10000'
+			},
+			test: {
+				options: {
+					serverurl: 'https://test.salesforce.com’
+				},
+				pkg: metadataToDeploy
+			},
+			prod: {
+				options: {
+					serverurl: 'https://login.salesforce.com'
+				},
+				pkg: metadataToDeploy
+			}
+		},

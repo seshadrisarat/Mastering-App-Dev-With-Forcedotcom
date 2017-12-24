@@ -1,0 +1,4 @@
+<Aura:Component>
+	<Aura:Attribute Name=”ClientName” Type=”String” Default=”Marc Benioff”/>
+<ui:button label=”call {!v.ClientName}” press=”{!c.MakeCall}”/>
+</Aura:Component>

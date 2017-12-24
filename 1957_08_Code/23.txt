@@ -1,0 +1,9 @@
+grunt.registerTask('repoinfo', function() {
+		var done = this.async();
+		callRepoInfo(done);
+	});
+
+	grunt.registerTask('genpullrequest', function() {
+		var done = this.async();
+		makePullRequest(done);
+	});

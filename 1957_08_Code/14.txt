@@ -1,0 +1,9 @@
+runt.registerMultiTask('deploy', "Refreshes resources and deploys to selected env", function() {
+		grunt.task.run([
+			'refreshResources',
+			'copy:deploy',
+			'prompt:login',
+			'antdeploy:' + this.target,
+			'clean:deployTmp'
+		]);
+	});

@@ -1,0 +1,4 @@
+Global Class CustomBatchable Implements Database.Batchable<sObject>,
+                              Database.Stateful, // This implements the Stateful interface
+                              Database.AllowsCallouts { // This enables Callouts
+}

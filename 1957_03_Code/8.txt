@@ -1,0 +1,7 @@
+Public with sharing class Examples {
+  @future
+  Public Static Void myAtFutureMethod(String jsonStringOfAccount){
+    Account a = (Account) JSON.deserialize(jsonStringOfAccount, Account.class);
+    //do work with your sObject
+  }
+}

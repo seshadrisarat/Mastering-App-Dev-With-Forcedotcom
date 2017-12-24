@@ -1,0 +1,8 @@
+{
+  "access_token": "00Di0000000ap76!MYDAU6HT3R.T3S5A.Isaw350m3AaBVlSd6sC30sYDoHS9_UTZK3_Mtj7TaIjtflXF96J3ybrrvVTqpU3rezCgjVFe56xdzY6m5AKht_d",
+  "instance_url": "https://na15.salesforce.com",
+  "id": "https://login.salesforce.com/id/NOTREAL0000ap76EAA/003i0000000fm0Faq3",
+  "token_type": "Bearer",
+  "issued_at": "1444961351427",
+  "signature": "8cTp+CtTAr3Y0uR3ad1ngTh1$sIQHJg25gGSrivMKpYA="
+}

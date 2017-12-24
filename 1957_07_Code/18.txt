@@ -1,0 +1,17 @@
+@HttpPut
+  global static Boolean bulkDelete(List<String> ids){
+  Id first = (id)ids[0];
+  Schema.SObjectType sobjectType = first.getSObjectType();
+  String sobjectName = sobjectType.getDescribe().getName();
+  List<sObject> toDelete = Database.query('Select Id From ' +
+sobjectName + ' Where Id IN :Ids');
+
+  boolean SuccessfullyDeleted = false;
+  try{
+  delete toDelete;
+  SuccessfullyDeleted = true;
+} catch (DMLException dmle){
+  throw new OppApiException(dmle);
+}
+  return SuccessfullyDeleted;
+}

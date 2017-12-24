@@ -1,0 +1,7 @@
+public void makeApiCall(){
+ this.endpoint = 'https://www.google.com?q=foo';
+ this.method = 'GET';
+ this.headers = new Map<String,String>();
+ this.body = '';
+ this.executeRequest();
+}

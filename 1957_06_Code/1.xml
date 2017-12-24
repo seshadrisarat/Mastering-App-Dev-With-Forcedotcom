@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:sf="antlib:com.salesforce"
+name="Salesforce Deploy Build Script"
+basedir=".">
+
+  <property file="build.properties" />
+  <property environment="env" />
+
+  <!-- Include the ant salesforce migration toolkit -->
+  <path id="classpath">
+    <fileset dir="${build.dir}/build/lib" includes="*.jar" />
+  </path>
+
+  <!-- retrieve files from the source org and place them
+in the build/src directory -->
+  <target name="retrieve"
+description="Clean the source directory and retrieve
+metadata from source org"
+depends="cleanSourceDirectory">
+    <echo>Logging into ${sfsource.serverurl}</echo>
+    <echo>With username: ${sfsource.username}</echo>
+    <sf:retrieve username="${sfsource.username}"
+					 password="${sfsource.password}"
+					 serverurl="${sfsource.serverurl}"
+					 retrieveTarget="${source.dir}"
+					 unpackaged="${source.metadata}" />
+  </target>
+
+
+
+
+
+  <!-- Clean (remove all files) from the build/src directory -->
+  <target name="cleanSourceDirectory"
+description="Clean all metadata and directories in source directory">
+    <echo>Cleaning directory: ${source.dir}</echo>
+    <delete includeEmptyDirs="true">
+      <fileset dir="${source.dir}"
+includes="**/*"
+excludes="destructiveChanges.xml" />
+    </delete>
+  </target>
+
+  <!-- Retreives latest code into src direct and
+ deploys the items from package.xml
+ into the target org -->
+  <target name="retrieveAndDeploy"
+description="Clean, retrieve code from source org,
+and deploy metadata to target org"
+depends="retrieve,deploy" />
+
+  <target name="deploy"
+description="Deploy metadata from source dir
+to target org">
+    <echo>Deploying code from ${source.dir}</echo>
+    <echo>Deploying code to ${sftarget.serverurl}</echo>
+    <echo>Deploying code with username:${sftarget.username}</echo>
+    <echo>Runing All Tests: ${sftarget.runAllTests}</echo>
+    <echo>Deploy Root: ${source.dir}</echo>
+
+    <sf:deploy username="${sftarget.username}"
+				  password="${sftarget.password}"
+				  serverurl="${sftarget.serverurl}"
+				  deployroot="${source.dir}"
+				  runAllTests="${sftarget.runAllTests}" />
+  </target>
+
+  <macrodef name="git">
+    <attribute name="dir" default="" />
+    <attribute name="branch" default="master" />
+    <sequential>
+      <exec executable="git" dir="@{dir}">
+        <arg value="pull" />
+        <arg value="origin" />
+        <arg value="@{branch}" />
+      </exec>
+    </sequential>
+  </macrodef>
+
+  <target name="checkoutFromGit">
+    <echo>Issuing git pull from directory: ${git.dir}</echo>
+    <echo>Pulling from branch: ${git.branch}</echo>
+    <git dir="${git.dir}" branch="${git.branch}" />
+  </target>
+
+  <target name="checkoutFromGitAndDeploy"
+ description="Checkout from Git and deploy to server"
+ depends="checkoutFromGit,deploy" />
+</project>

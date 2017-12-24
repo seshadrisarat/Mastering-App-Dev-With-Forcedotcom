@@ -1,0 +1,2 @@
+// Default task.
+	grunt.registerTask('default', 'jasmine');

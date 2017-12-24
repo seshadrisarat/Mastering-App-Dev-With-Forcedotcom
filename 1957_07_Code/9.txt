@@ -1,0 +1,3 @@
+FirstName,LastName,Title,ReportsTo.Email,Birthdate,Description
+Stephanie,Poorman,Senior Director Poorman family, herself@example.com,1984-06-07Z,"Best darn wife this side of pluto"
+Tessa,Poorman,Destructosaurus,parents@poormans.com,2014-03-11,"World-renowned expert in toddling about and making messes."

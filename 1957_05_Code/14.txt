@@ -1,0 +1,12 @@
+@isTest
+private class ExampleCodeTests {
+	TestOptions__c options;
+
+	@testSetup static void setup() {
+		options = TestOptions__c.getInstance('default');
+	}
+
+	@isTest static void someTest(){
+		Account[] accounts = (Account[])TestFactory.createSObjectList(new Account(), options.EnvironmentBulkSize);
+	}
+}

@@ -1,0 +1,60 @@
+public with sharing class RestClient {
+ Public class RestClientException extends Exception {}
+
+ Public Map<String, String> headers = new Map<String, String>();
+ Public String endpoint = '';
+ Public String method = '';
+ Public String body = '';
+ Public HttpRequest request;
+ Public HttpResponse response;
+ Public Integer responseCode;
+ Public String responseBody;
+ Public Http httpObj;
+ Public String clientCert;
+
+ Public Static Final Integer HTTP_MAX_REQUEST_TIME = 120000;
+ Public Static Final Boolean ENABLE_DEBUG_LOGS = TRUE;
+ /*
+  * Helper Methods - These do the actual work.
+  */
+
+ Public void buildRequest() {
+  if (ENABLE_DEBUG_LOGS) {
+   system.debug('Restclient buildRequest details' + headers + '\n' +
+     endpoint + '\n' + method + '\n' + body +
+     'set RestClient.ENABLE_DEBUG_LOGS = false to suppress this
+      message');
+  }
+  //Create the httpRequest Object
+  HttpRequest request = new HttpRequest();
+  //Set the max timeout
+  request.setTimeout(HTTP_MAX_REQUEST_TIME);
+  //Given a map<String,String> of header keys and values set
+  //them as request headers
+  if (this.headers != null) {
+   for (String headerName : this.headers.keySet()) {
+    request.setHeader(headerName, headers.get(hkey));
+   }
+  }
+  //Set the Endpoint
+  request.setEndpoint(this.endpoint);
+  //Set the Method
+  request.setMethod(this.method);
+  //Optionally set the body, if it's not blank or empty
+  if (String.isNotBlank(this.body) && String.isNotEmpty(this.body)) {
+   request.setBody(this.body);
+  }
+  this.request = request;
+ }
+
+Public void executeRequest() {
+		if(this.request == null){
+			this.buildRequest();
+		}
+		this.response = this.httpObj.send(request);
+		if (response.getStatusCode() > 299) {
+throw new RestClientException('Response Code was: ' +
+ response.getStatusCode());
+		}
+	}
+}

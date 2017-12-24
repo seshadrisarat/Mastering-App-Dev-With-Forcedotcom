@@ -1,0 +1,14 @@
+global void execute(Database.BatchableContext BC, List<Account> scope) {
+  List<Account> toDelete = new List<Account>();
+  List<Account> toUpdate = new List<Account>();
+
+  for (Account a : scope) {
+    if(a.bad_account__c){
+      toDelete.add(a);
+    } else {
+      toUpdate.add(a);
+    }
+  }
+  update toUpdate;
+  delete toDelete;
+}

@@ -1,0 +1,6 @@
+#Environment Setup
+npm install -g --prefix /home/ubuntu/ -q grunt-cli
+npm install -q
+#CI tests
+grunt jasmine
+grunt automatedDeploy

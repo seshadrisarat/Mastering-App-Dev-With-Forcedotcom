@@ -1,0 +1,20 @@
+@isTest
+private class CustomScheduledClass_Test {
+
+  @isTest static void test_withCronExpressionForOneYearInFuture() {
+    Integer oneYearInFuture = Date.today().addYears(1).year();
+    String TESTING_CRON_EXPRESSION = '0 0 0 15 3 ? ' + oneYearInFuture;
+
+    Test.startTest();
+    String JobIdentifier = System.Schedule('The Best Job Ever', TESTING_CRON_EXPRESSION, new CustomBatchableClass());
+
+    CronTrigger CronTriggerObj = [SELECT Id, CronExpression, TimesTriggered, NextFireTime
+                                  FROM CronTrigger
+                                  WHERE id = :JobIdentifier];
+
+    System.assertEquals(CRON_EXP, CronTriggerObj.CronExpression);
+    System.assertEquals(0, CronTriggerObj.TimesTriggered);
+    System.assertEquals('2022-03-15 00:00:00', String.valueOf(CronTriggerObj.NextFireTime));
+    Test.startTest();
+  }
+}

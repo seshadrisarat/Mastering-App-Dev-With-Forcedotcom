@@ -1,0 +1,42 @@
+@HttpPost
+global static OppApiWrapper CreateTree(OppApiWrapper incoming) {
+  if(incoming == null && incoming.opp != null) {
+    throw new OppApiException('Incoming JSON paylaod failed to
+      deserialize to an object with an Opportunity key');
+  }
+  //The point of this is to create object trees in a
+  //transaction, so lets set a savepoint.
+  SavePoint tx = Database.setSavepoint();
+
+  //Try inserting just the opportunity. We'll need it's ID
+  //to properly insert the child objects
+  try{
+    insert incoming.opp;
+  } catch (DMLException dmle){
+    //if we cannot insert the opp, abort the transaction
+    //and throw exception.
+    Database.rollback(tx);
+    throw new OppApiException(dmle);
+  }
+  //Now that we have the opportunities ID we can assign it
+  //to the child objects
+  for(OpportunityLineItem oli: incoming.oppLineItems){
+    oli.OpportunityId = incoming.opp.id;
+  }
+  for(Order o: incoming.oppOrders){
+    o.OpportunityId = o.id;
+  }
+  //now lets try inserting our child objects.
+  //we can do these together.
+  //if either fails, abort the transaction and throw an exception.
+  try{
+    insert incoming.oppLineItems;
+    insert incoming.OppOrders;
+  } catch (DMLException dmle) {
+    Database.rollback(tx);
+    throw new OppApiException(dmle);
+  }
+  //Everything worked great! now lets return a new wrapper
+  //object from our new opportunity
+  return new OppApiWrapper(incoming.opp.id);
+}

@@ -1,0 +1,11 @@
+private class exampleCode_Tests {
+  @isTest static void test_getBankAccount_AsUserWithTimeLord() {
+ User u = UserTestFactory.getUserWithProfile(‘TimeLord’);
+ System.runAs(u){
+      Test.startTest();
+ 		  // This is executed as our user with the Timelord
+		  // profile
+      Test.stopTest();
+    }
+    // Assertions
+}

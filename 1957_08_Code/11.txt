@@ -1,0 +1,20 @@
+prompt: {
+			login: {
+				options: {
+					questions: [{
+						config: 'antdeploy.test.options.user',
+						type: 'input',
+						message: "Enter the Deploy Username: ",
+					}, {
+						config: 'antdeploy.test.options.pass',
+						type: 'password',
+						message: "Enter pass (without security token): ",
+					}, {
+						config: 'antdeploy.test.options.token',
+						type: 'password',
+						message: "Enter Security Token: ",
+					}]
+				}
+			},
+		},
+	});

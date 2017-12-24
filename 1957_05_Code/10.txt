@@ -1,0 +1,79 @@
+@isTest
+Public Class accountPermTests {
+
+  public class PermissionTestData {
+    Boolean isProfileTest {get;set;}
+    Boolean isPermSetTest {get;set;}
+    Boolean isPositiveTest {get;set;}
+    String profileName {get;set;}
+    String permSetName {get;set;}
+    String exceptionTypeName {get;set;}
+    String exceptionMessage {get;set;}
+    String friendlyMessage {get;set;}
+    String assertEqualsValue {get;set;}
+
+    Public PermissionTestData(Boolean iisProfileTest,
+Boolean iisPermSetTest, Boolean iisPositiveTest,
+String iProfileName, String isPermSetName,
+String iExceptionTypeName, String iExceptionMessage, String iFriendlyMessage iAssertEqualsValue) {
+      this.isProfileTest = iisPositiveTest;
+      this.isPermSetTest = iisPermSetTest;
+      this.isPositiveTest = iisPositiveTest;
+      this.profileName = iProfileName;
+      this.permSetName = isPermSetName;
+      this.exceptionTypeName = iExceptionTypeName;
+      this.exceptionMessage = iExceptionMessage;
+      this.friendlyMessage = iFriendlyMessage;
+      this.assertEqualsValue = iAssertEqualsValue;
+    }
+  }
+
+  private List<PermissionTestData> PTD = new List<PermissionTestData>();
+
+  private List<PermissionTestData> setPopulatedTestData() {
+    PTD.add(new PermissionTestData(true, false, true,
+          'support', '', '', '',
+          'Expected this test to pass'));
+    PTD.add(new PermissionTestData(true, true, true, 'support',
+          'Support Manager', 'ExampleCodeException',
+          'No access for you',
+          'Did not expect this test to pass as the permission set involved should not pass!'));
+  }
+
+  @isTest static void test_getBankAccount_WithPermSets() {
+    for(PermissionTestData p: setPopulatedTestData()) {
+      exampleCode instance = new ExampleCode();
+      User u;
+      Boolean didCatchException;
+      Integer result;
+      Account a = (Account)TestFactory.createSObject(new Account());
+      if(p.isPermSetTest && p.isProfileTest
+        && p.profileName != '' && p.permSetName != ''){
+        u = UserTestFactory.getUserWithProfileAndPermSets (p.profileName, new List<String>{p.permSetName});
+      } else if (p.isProfileTest && p.profileName != ''){
+        u = UserTestFactory.getUserWithProfile(p.profileName);
+      }
+      Test.startTest();
+      System.runAs(u){
+        if(p.isPositiveTest) {
+          result = instance.getBankAccount(a);
+        } else {
+          try {
+            result = instance.getBankAccount(a);
+          } catch(Exception e) {
+            if(e.getTypeName() == p.exceptionTypeName &&
+               e.getMessage().containsIgnoreCase(p.exceptionMessage)){
+              didCatchException = true;
+            }
+          }
+        }
+      }
+      Test.stopTest();
+
+      if(p.isPositiveTest){
+        System.AssertEquals(p.AssertEquals, Result, p.friendlyMessage);
+      } else {
+        System.assert(didCatchException, p.friendlyMessage);
+      }
+    }
+}

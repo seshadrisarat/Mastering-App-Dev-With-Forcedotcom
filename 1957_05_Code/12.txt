@@ -1,0 +1,24 @@
+@isTest
+public with sharing class CalloutMockFactory implements HttpCalloutMock {
+	Protected Integer             code;
+	Protected String              status;
+	Protected String              bodyAsString;
+	Protected Blob                bodyAsBlob;
+	Protected Map<String, String> responseHeaders;
+
+	public CalloutMockFactory(Integer code, String status, String body, Map<String, String> responseHeaders) {
+		this.code = code;
+		this.status = status;
+		this.bodyAsString = body;
+		this.bodyAsBlob = null;
+		this.responseHeaders = responseHeaders;
+	}
+
+	public HTTPResponse respond(HTTPRequest req) {
+		HttpResponse res = new HttpResponse();
+		res.setStatusCode(this.code);
+		res.setStatus(this.status);
+		res.setBody(this.bodyAsString);
+		return res;
+	}
+}

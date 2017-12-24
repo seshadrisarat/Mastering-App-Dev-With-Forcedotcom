@@ -1,0 +1,5 @@
+global class SchedulableClass implements Schedulable {
+  global void execute(SchedulableContext SC) {
+    // do stuff here.
+  }
+}

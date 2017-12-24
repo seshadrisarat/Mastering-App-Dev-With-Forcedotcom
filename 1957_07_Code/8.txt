@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jobInfo
+   xmlns="http://www.force.com/2009/06/asyncapi/dataload">
+ <id>750D00000000023IAF</id>
+ <operation>upsert</operation>
+ <object>Contact</object>
+ <state>Open</state>
+ <contentType>CSV</contentType>
+</jobInfo>

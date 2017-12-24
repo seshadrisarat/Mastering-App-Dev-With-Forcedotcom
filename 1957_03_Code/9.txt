@@ -1,0 +1,37 @@
+Public with sharing class auditLogGenerator implements Queueable, Database.allowsCallouts {
+
+  private account a {get; set;}
+  public auditLogGenerator(Account incomingAccount) {
+    this.a = incomingAccount;
+  }
+
+  public void execute(QueueableContext qc) {
+    Audit_Log__c log = [SELECT Id,
+                        Success__c, RequestJson__c,
+                        ResponseJson__c, Stacktrace__c,
+                        AccountID__c
+                       FROM Audit_Log__c
+                       WHERE JobId__c = :qc.getJobId()];
+
+    try {
+      log.RequestJson__c = Rest.GenerateRequestFromAccount(this.a);
+      HTTPResponse response = Rest.makeRestRequestWithUrlMethodAndBody(
+        'https://www.example.com', Rest.GET,
+        log.RequestJson__c);
+
+      if (response.getStatusCode() == 200) {
+        log.Success__c = true;
+      }
+      log.ResponseJson__c = response.getBody();
+    } catch (Exception e) {
+      log.Success__c = false;
+      log.Stacktrace__c = e.getStackTraceString();
+    }
+    if (!log.Success__c) {
+      Id retryJobId = System.EnqueueJob(new auditLogGenerator(this.a));
+      Audit_Log__c retryAuditLog = new Audit_Log__c(JobId__c = retryJobId, AccountID__c = this.a.Id);
+    }
+    update log;
+  }
+
+}
